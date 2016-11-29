@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 13:24:23
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 09:38:36
+* @Last Modified time: 2016-11-29 11:20:45
 */
 
 'use strict';
@@ -41,7 +41,6 @@ export const initialState = () => {
 				mRate: AlgorithmParameter("mRate", "Rate of chromosomal mutation", 0.002), 
 				pSize: AlgorithmParameter("pSize", "Population Size", 100)
 			})
-		}),
-		todos: []
+		})
 	}
 }
