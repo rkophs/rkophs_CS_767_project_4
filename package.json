@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "main": "bundle.js",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "d3": "^4.3.0",
     "immutable": "^3.8.1",
     "lodash": "^4.17.2",
     "mersenne-twister": "^1.1.0",
     "normalizr": "^2.2.1",
     "react": "^15.4.0",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.0",
+    "react-form": "0.0.2",
+    "react-html-parser": "^1.0.3",
     "react-redux": "^4.4.6",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-form": "^6.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
@@ -20,6 +25,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "css-loader": "^0.26.0",
+    "file-loader": "^0.9.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"

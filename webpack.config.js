@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-21 21:36:03
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-21 22:57:50
+* @Last Modified time: 2016-11-28 14:10:09
 */
 
 'use strict';
@@ -25,7 +25,13 @@ module.exports = {
 				query: {
 					presets: ['es2015', 'react', 'stage-0']
 				}
-      }
+			},{
+				test: /\.css$/,
+				loader: 'style-loader!css-loader'
+			},{
+				test: /\.(json|ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+				loader: 'file-loader',
+			}
 		]
 	}
 }
