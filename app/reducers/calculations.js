@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 13:29:24
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 21:27:20
+* @Last Modified time: 2016-11-30 02:41:26
 */
 
 'use strict';
@@ -14,9 +14,9 @@ import { fuelCellGARun,
 		fuelCellParams,
 		fuelCellBounds } from '../machineLearning/FuelCellGA'
 
-const defaultState = Immutable.List([])
+import {calculations} from '../utilities/initialState'
 
-const calculations = (state = defaultState, action) => {
+const calcs = (state = calculations, action) => {
 	switch (action.type) {
 		case 'REQUEST_GA_EXECUTION':
 			return state.push(Immutable.Map({
@@ -50,4 +50,4 @@ const calculations = (state = defaultState, action) => {
 	}
 }
 
-export default calculations
+export default calcs
