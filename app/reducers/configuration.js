@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 17:14:27
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-30 02:42:22
+* @Last Modified time: 2016-11-30 10:37:39
 */
 
 'use strict';
@@ -11,7 +11,7 @@ import Immutable from 'immutable'
 
 import { configuration } from '../utilities/initialState'
 
-const config = (state = configuration, action) => {
+const config = (state = configuration(), action) => {
 	switch (action.type) {
 		case 'UPDATE_CONFIG_BOUNDS':
 			const newBound = action.bound.set(action.key, action.value)

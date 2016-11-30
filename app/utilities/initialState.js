@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 13:24:23
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-30 02:40:40
+* @Last Modified time: 2016-11-30 10:40:06
 */
 
 'use strict';
@@ -34,7 +34,7 @@ export const configuration = () => Immutable.Map({
 	ga: Immutable.Map({
 		noise: AlgorithmParameter("noise", "Simulation noise, [0,1]", 0.3), 
 		maxCurrent: AlgorithmParameter("maxCurrent", "Maximum current (A)", 20),
-		genCount: AlgorithmParameter("genCount", "Number of generations", 1000), 
+		genCount: AlgorithmParameter("genCount", "Number of generations", 10), 
 		birthRate: AlgorithmParameter("birthRate", "Child rate per couple", 2), 
 		mRate: AlgorithmParameter("mRate", "Rate of mutation", 0.002), 
 		pSize: AlgorithmParameter("pSize", "Population Size", 100),

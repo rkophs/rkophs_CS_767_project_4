@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 13:29:24
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-30 02:41:26
+* @Last Modified time: 2016-11-30 10:37:43
 */
 
 'use strict';
@@ -16,7 +16,7 @@ import { fuelCellGARun,
 
 import {calculations} from '../utilities/initialState'
 
-const calcs = (state = calculations, action) => {
+const calcs = (state = calculations(), action) => {
 	switch (action.type) {
 		case 'REQUEST_GA_EXECUTION':
 			return state.push(Immutable.Map({

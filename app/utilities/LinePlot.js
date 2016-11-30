@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 21:50:35
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 23:06:36
+* @Last Modified time: 2016-11-30 09:59:18
 */
 
 'use strict';
@@ -19,8 +19,8 @@ const LinePlot = () => {
 
 	const svg = d3.select("#chart_svg"),
 	margin = {top: 20, right: 80, bottom: 30, left: 50},
-	width = svg.attr("width") - margin.left - margin.right,
-	height = svg.attr("height") - margin.top - margin.bottom,
+	width = 960 - margin.left - margin.right,
+	height = 500 - margin.top - margin.bottom,
 	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	const x = d3.scaleLinear().range([0, width]),

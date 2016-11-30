@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 21:09:33
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-30 02:31:06
+* @Last Modified time: 2016-11-30 10:40:36
 */
 
 'use strict';
@@ -67,16 +67,12 @@ class Graph extends React.Component {
 			this.restart()
 		}
 
-		const lines = []
-		for (let i = 0; i < this.state.i; i++) {
-			const row = this.generations.get(i);
-			lines.push(<div key={`${runId}_${i}`} >Hello</div>)
-		}
+		const i = this.state.i
 
 		return (
 			<div>
 				<h4>Complete</h4>
-				{lines}
+				<Plot i={i} />
 			</div>)
 	}
 }
