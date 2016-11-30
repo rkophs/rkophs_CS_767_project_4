@@ -4,7 +4,7 @@
   "main": "bundle.js",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "d3": "^4.3.0",
+    "d3": "^4.4.0",
     "immutable": "^3.8.1",
     "lodash": "^4.17.2",
     "mersenne-twister": "^1.1.0",
@@ -14,9 +14,11 @@
     "react-dom": "^15.4.0",
     "react-form": "0.0.2",
     "react-html-parser": "^1.0.3",
+    "react-loader": "^2.4.0",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
-    "redux-form": "^6.2.0"
+    "redux-form": "^6.2.0",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

@@ -1,16 +1,16 @@
 import React from 'react'
-import { Grid, Row, Col } from 'react-bootstrap';
+import Loader from 'react-loader'
+import { Grid} from 'react-bootstrap';
 import Configuration from '../containers/Configuration'
+import Visualization from '../containers/Visualization'
 
-const App = () => (
-  <div>
-	<Grid>
-		<Row className="show-grid">
-			<Col xs={6} md={5}><Configuration /></Col>
-			<Col xs={10} md={7}>Hello</Col>
-		</Row>
-	</Grid>
-  </div>
-)
+const App = ({state}) => {
+
+	return (
+		<Grid fluid={true} >
+			<Configuration />
+			<Visualization />
+		</Grid>)
+}
 
 export default App

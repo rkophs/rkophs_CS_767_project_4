@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-23 16:19:53
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-27 21:48:07
+* @Last Modified time: 2016-11-29 20:35:24
 */
 
 'use strict';
@@ -62,15 +62,21 @@ const fuelCellIndividualBuilder = (prg, fuelCellConstants, fuelCellGAParams) => 
 		});
 	};
 
+	const solution = (params) => {
+		return Immutable.List(Array(fuelCellGAParams.maxCurrent())).map((_, i) => {
+				return voltage(i+1, params, fuelCellCalc);
+			});
+	}
+
 	const fitness = (params) => {
-		return Immutable.List(Array(fuelCellGAParams.maxCurrent()))
-			.reduce((a, c, i) => {
-				const err = target.get(i) - voltage(i+1, params, fuelCellCalc);
-				return a + (err * err);
-			}, 0);
+		const sse = solution(params).reduce((a, c, i) => {
+			const err = target.get(i) - c;
+			return a + (err * err);
+		}, 0);
+		return 1/sse;
 	};
 
-	return GeneticIndividual(crossover, mutate, fitness);
+	return GeneticIndividual(crossover, mutate, fitness, solution);
 };
 
 export const fuelCellParams = (n1, n2, n3, n4, y, rC, b) => {
@@ -102,7 +108,7 @@ export const fuelCellGAParams = (noise, paramBounds, targetParams,
 	}
 };
 
-export const fuelCellGARun = (seed, fuelCellConstants, fuelCellGAParams) => {
+export const fuelCellGARun = (seed, fuelCellConstants, fuelCellGAParams, quit, then) => {
 	const prg = new PRG(seed);
 	const builder = fuelCellIndividualBuilder(prg, fuelCellConstants, fuelCellGAParams);
 	const population = Immutable.List(Array(fuelCellGAParams.populationSize()))
@@ -113,7 +119,7 @@ export const fuelCellGARun = (seed, fuelCellConstants, fuelCellGAParams) => {
 			return builder(dna);
 		});
 
-	return GA(prg, population, fuelCellGAParams.genCount(), 
+	GA(prg, population, fuelCellGAParams.genCount(), 
 		fuelCellGAParams.birthRate(), 
-		fuelCellGAParams.mRate())
+		fuelCellGAParams.mRate(), quit, then)
 };

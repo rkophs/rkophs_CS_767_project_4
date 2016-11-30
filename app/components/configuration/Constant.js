@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:55:50
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-28 18:55:57
+* @Last Modified time: 2016-11-29 14:07:47
 */
 
 'use strict';
@@ -17,8 +17,8 @@ const Constant = ({constant, onChange}) => {
 	}
 
 	return (<FormGroup controlId={"formHorizontal_constants_" + constant.get("id")}>
-		<Col componentClass={ControlLabel} sm={9}><code>{constant.get("html")}</code> {constant.get("description")}</Col>
-		<Col sm={3}><FormControl defaultValue={constant.get("value")} 
+		<Col componentClass={ControlLabel} sm={8}><h6><code>{constant.get("html")}</code> {constant.get("description")}</h6></Col>
+		<Col sm={4}><FormControl defaultValue={constant.get("value")} 
 								onChange={handleChange} /></Col>
 	</FormGroup>)
 }

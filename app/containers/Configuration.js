@@ -2,13 +2,13 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:36:28
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 11:15:34
+* @Last Modified time: 2016-11-29 17:46:13
 */
 
 'use strict';
 
 import { connect } from 'react-redux'
-import { runGA,
+import { executeGA,
 			updateBoundsConfig,
 			updateConstantsConfig,
 			updateGAParam } from '../actions'
@@ -21,7 +21,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onSubmitGA: (bounds, constants, gaParams) => dispatch(runGA(bounds, constants, gaParams)),
+	onSubmitGA: (bounds, constants, gaParams) => dispatch(
+		executeGA(bounds, constants, gaParams)),
 	onBoundsChange: (bound, key, value) => dispatch(updateBoundsConfig(bound, key, value)),
 	onConstantsChange: (constant, value) => dispatch(updateConstantsConfig(constant, value)),
 	onGaChange: (param, value) => dispatch(updateGAParam(param, value))

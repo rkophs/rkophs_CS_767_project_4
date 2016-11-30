@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 17:14:27
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 11:14:26
+* @Last Modified time: 2016-11-30 00:17:23
 */
 
 'use strict';
@@ -27,11 +27,8 @@ const configuration = (state = defaultConfigState, action) => {
 			return state.merge(Immutable.Map({constants: newConstants}))
 		case 'UPDATE_GA_PARAM':
 			const newParam = action.param.set("value", action.value)
-			const newParams = state.get("ga").set(newParams.get("id"), newParam)
+			const newParams = state.get("ga").set(newParam.get("id"), newParam)
 			return state.merge(Immutable.Map({ga: newParams}))
-		case 'RUN_GA': 
-			console.log(action)
-			return state
 		default:
 			return state
 	}

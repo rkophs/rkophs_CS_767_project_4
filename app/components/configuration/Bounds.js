@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:55:50
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-28 17:03:09
+* @Last Modified time: 2016-11-29 14:05:38
 */
 
 'use strict';
@@ -22,13 +22,17 @@ const Bounds = ({bound, onChange}) => {
 	}
 
 	return (<FormGroup controlId={"formHorizontal_bounds_" + bound.get("id")}>
-		<Col componentClass={ControlLabel} sm={6}><code>{bound.get("html")}</code> {bound.get("description")}</Col>
+		<Col componentClass={ControlLabel} sm={3}><h6><code>{bound.get("html")}</code>{bound.get("description")}</h6></Col>
 		<Col sm={3}>
 			<FormControl defaultValue={bound.get("lower")} 
 						onChange={handleLowerChange} />
 		</Col>
 		<Col sm={3}>
 			<FormControl defaultValue={bound.get("upper")}
+						onChange={handleUpperChange} />
+		</Col>
+		<Col sm={3}>
+			<FormControl defaultValue={bound.get("actual")}
 						onChange={handleUpperChange} />
 		</Col>
 	</FormGroup>)

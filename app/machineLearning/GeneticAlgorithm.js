@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-09 11:06:47
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-28 10:57:13
+* @Last Modified time: 2016-11-29 21:32:55
 */
 
 'use strict';
@@ -51,21 +51,30 @@ const getFittest = (population) => {
 	}, population.get(0));
 }
 
-const GA = (prg, initialPopulation, gCount, birthRate, mRate) => {
+const GA = (prg, initialPopulation, gCount, birthRate, mRate, quit, then) => {
+
 	let pop = Immutable.List(initialPopulation);
 	let g1 = Immutable.Map({population: pop, fittest: getFittest(pop)});
 	let generations = [g1];
-	for (let i = 0; i < gCount; i++) {
+
+	const iteration = (i) => {
 		pop = generation(prg, pop, birthRate, mRate);
 		const fittest = getFittest(pop);
-		let g = Immutable.Map({population: pop, fittest: fittest})
+		let g = Immutable.Map({population: pop, fittest: fittest});
 		generations.push(g);
+
+		const stop = quit()
+		if (i < gCount && !stop) {
+			setTimeout(() => iteration(i + 1), 0)
+		} else {
+			then(Immutable.Map({
+				solution: generations[0].get('fittest'),
+				generations: Immutable.List(generations)
+			}), !stop);
+		}
 	}
 
-	return Immutable.Map({
-		solution: generations[0].get('fittest'),
-		generations: Immutable.List(generations)
-	});
+	iteration(0);
 }
 
 export default GA
