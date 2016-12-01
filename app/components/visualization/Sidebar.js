@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:55:50
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-30 00:12:48
+* @Last Modified time: 2016-12-01 11:13:28
 */
 
 'use strict';
@@ -10,17 +10,20 @@
 import React, { PropTypes } from 'react'
 import { Button } from 'react-bootstrap';
 
-const Sidebar = ({ui, calculations, onRunChange}) => {
+const Sidebar = ({ui, count, onRunChange}) => {
 
 	const visible = ui.get('visibleRun');
+
+	const buttons = []
+	for (let i = 0; i < count; i++) {
+		buttons.push(<Button key={`sidebar_${i}`} onClick={() => onRunChange(i)}
+						active={i == visible}>{`Run: ${i + 1}`}</Button>)
+	}
 
 	return (
 		<div>
 			<h4>Run History</h4>
-			{ calculations.map(run => 
-				(<Button key={run.get("id")} onClick={() => onRunChange(run)}
-				active={run.get("id") == visible}>{`Run: ${run.get("id") + 1}`}</Button>)
-			)}
+			{buttons}
 		</div>
 	)
 }

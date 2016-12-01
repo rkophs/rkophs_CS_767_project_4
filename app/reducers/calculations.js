@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 13:29:24
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-30 10:37:43
+* @Last Modified time: 2016-12-01 11:33:44
 */
 
 'use strict';
@@ -25,16 +25,15 @@ const calcs = (state = calculations(), action) => {
 				type: "GA"
 			}))
 		case 'RECEIVE_GA_SUCCESS':
-			return state.set(action.id, Immutable.Map({
+			return state.set(action.id, action.results.merge(Immutable.Map({
 				loading: false,
 				type: "GA",
 				status: "SUCCESS",
-				results: action.results,
 				bounds: action.bounds,
 				constants: action.constants,
 				gaParams: action.gaParams,
 				id: action.id
-			}));
+			})));
 		case 'RECEIVE_GA_FAILURE':
 			return state.set(action.id, Immutable.Map({
 				loading: false,

@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-23 15:53:00
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 15:32:10
+* @Last Modified time: 2016-12-01 11:17:45
 */
 
 'use strict';
@@ -23,7 +23,7 @@ const GeneticIndividual = (crossover, mutate, fitness, solution) => (dna) => {
 		return soln()
 	}
 
-	const builder = GeneticIndividual(crossover, mutate, fitness)
+	const builder = GeneticIndividual(crossover, mutate, fitness, solution)
 
 	return {
 		crossover: (prg, count, i) => {

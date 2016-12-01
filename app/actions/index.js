@@ -52,9 +52,16 @@ export const updateGAParam = (param, value) => {
   }
 }
 
-export const changeRunDisplay = (run) => {
+export const changeRunDisplay = (id) => {
   return {
     type: "CHANGE_RUN_DISPLAY",
-    run
+    id
+  }
+}
+
+export const changeSpeed = (speed) => {
+  return {
+    type: "CHANGE_SPEED",
+    speed
   }
 }

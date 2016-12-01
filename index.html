@@ -12,14 +12,37 @@
 		.line {
 			fill: none;
 			stroke: steelblue;
-			stroke-width: 1.5px;
+			stroke-width: 1px;
 		}
+
+        .line_approx {
+            fill: none;
+            stroke: lightcoral;
+            stroke-width: 3px;
+        }
+
+        .line_actual {
+            fill: none;
+            stroke: springgreen;
+            stroke-width: 4px;
+        }
+
+        .text_results {
+            white-space: nowrap;
+            height: 700px;
+            overflow: scroll;
+        }
+
+        .run_configuration {
+            white-space: nowrap;
+            height: 700px;
+            overflow: scroll;
+        }
 
 		</style>
     </head>
     <body>
         <div id='root'></div>
-        <svg id="chart_svg" width="960" height="500"></svg>
         <script src='dist/bundle.js' type='text/javascript'></script>
     </body>
 </html>

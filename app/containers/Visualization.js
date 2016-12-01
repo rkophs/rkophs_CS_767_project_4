@@ -2,13 +2,13 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:36:28
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-30 02:32:18
+* @Last Modified time: 2016-12-01 13:25:53
 */
 
 'use strict';
 
 import { connect } from 'react-redux'
-import { changeRunDisplay } from '../actions'
+import { changeRunDisplay, changeSpeed } from '../actions'
 import Visualization from '../components/Visualization'
 
 const mapStateToProps = (state) => ({
@@ -17,7 +17,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onRunChange: (run) => { dispatch(changeRunDisplay(run)) },
+	onRunChange: (id) => { dispatch(changeRunDisplay(id)) },
+	onSpeedChange: (speed) => { dispatch(changeSpeed(speed)) }
 })
 
 const Visual = connect(

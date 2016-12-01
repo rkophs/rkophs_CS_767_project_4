@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 16:44:03
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 20:33:53
+* @Last Modified time: 2016-12-01 14:03:46
 */
 
 'use strict';
@@ -61,5 +61,40 @@ export const runGA = (bounds, constants, gaParams, quit, then) => {
 
 	const seed = gaParams.get("gaSeed").get("value");
 
-	fuelCellGARun(seed, fcConstants, fcParams, quit, then);
+	const normalize = (results) => {
+
+		const solution = results.get("solution")
+		const generations = results.get("generations");
+		const actualStack = results.get("actualStack").map((v,i) => [i, v]).toArray()
+
+		let yMin = solution.solution().get(0);
+		let yMax = 0;
+		let xMin = 0;
+		let xMax = 0;
+
+		const bests = []
+		const lines = generations.map(gen => {
+			const fittest = gen.get("fittest")
+			bests.push({ dna: fittest.dna().toArray(), fitness: fittest.fitness() });
+
+			return fittest.solution().map((v, i) => {
+				yMin = Math.min(v, yMin);
+				yMax = Math.max(v, yMax);
+				xMin = Math.min(i, xMin);
+				xMax = Math.max(i, xMax);
+				return [i, v]
+			}).toArray()
+		}).toArray()
+
+		return Immutable.Map({
+			xBounds: [xMin, xMax],
+			yBounds: [yMin, yMax],
+			lines: lines,
+			bests: bests,
+			actualStack: actualStack
+		})
+	}
+
+	fuelCellGARun(seed, fcConstants, fcParams, quit, (r, s) => then(normalize(r), s));
 }
+

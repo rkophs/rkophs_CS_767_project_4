@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-09 11:06:47
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 21:32:55
+* @Last Modified time: 2016-12-01 12:39:44
 */
 
 'use strict';
@@ -14,9 +14,7 @@ const chooseIndividual = (prg, population, fitnessSum) => {
 	let randSelect = prg.random() * fitnessSum;
 	return population.findEntry((individual) => {
 		randSelect -= individual.fitness();
-		if(randSelect <= 0) {
-			return true;
-		}
+		return randSelect <= 0;
 	}, population);
 }
 
@@ -57,6 +55,8 @@ const GA = (prg, initialPopulation, gCount, birthRate, mRate, quit, then) => {
 	let g1 = Immutable.Map({population: pop, fittest: getFittest(pop)});
 	let generations = [g1];
 
+	let interval;
+
 	const iteration = (i) => {
 		pop = generation(prg, pop, birthRate, mRate);
 		const fittest = getFittest(pop);
@@ -64,17 +64,17 @@ const GA = (prg, initialPopulation, gCount, birthRate, mRate, quit, then) => {
 		generations.push(g);
 
 		const stop = quit()
-		if (i < gCount && !stop) {
-			setTimeout(() => iteration(i + 1), 0)
-		} else {
+		if (i >= gCount - 1 || stop) {
+			clearInterval(interval)
 			then(Immutable.Map({
-				solution: generations[0].get('fittest'),
+				solution: g.get('fittest'),
 				generations: Immutable.List(generations)
 			}), !stop);
 		}
 	}
 
-	iteration(0);
+	let i = 0
+	interval = setInterval(() => iteration(i++), 0)
 }
 
 export default GA
