@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-12-01 13:45:44
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 14:37:13
+* @Last Modified time: 2016-12-01 15:02:25
 */
 
 'use strict';
@@ -18,6 +18,7 @@ const TextResults = ({run}) => {
 
 	const bests = run.get("bests")
 	return (<div className="text_results" >
+		<h4>Best Solutions for each Generation</h4>
 		{ bests.map((gen, i) => {
 			const dna = gen.dna.map(d => d.toFixed(7))
 			const fitness = gen.fitness

@@ -2,14 +2,13 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:55:50
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 14:05:38
+* @Last Modified time: 2016-12-01 15:09:49
 */
 
 'use strict';
 
 import React, { PropTypes } from 'react'
 import { FormGroup, FormControl, ControlLabel, Col, Code } from 'react-bootstrap';
-import ReactHtmlParser from 'react-html-parser';
 
 const Bounds = ({bound, onChange}) => {
 

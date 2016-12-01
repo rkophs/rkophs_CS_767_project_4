@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 21:46:42
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 13:07:16
+* @Last Modified time: 2016-12-01 15:06:58
 */
 
 'use strict';
@@ -28,11 +28,13 @@ class Axis extends React.Component {
 
 	render() {
 		const translate = `translate(0,${this.props.h})`;
+		const y = this.props.axisType == 'x' ? 20 : -30
+		const x = this.props.axisType == 'x' ? 50 : -20
 		return (
 			<g className="axis axis--y" 
 					transform={ this.props.axisType == 'x' ? translate : "" } >
 				<text transform= { this.props.axisType == 'x' ? "" : "rotate(-90)" }
-						y={10} dy="0.71em" fill="#000" >
+						y={y} x={x} dy="0.71em" fill="#000" >
 					{this.props.text}
 				</text>
 			</g>)
@@ -46,8 +48,8 @@ const Plot = ({lines, actual, approx, yBounds, xBounds, margin, xAxis, yAxis, he
 	return (<div>
 			<svg id={"testId"} width="100%" height="500">
 				<g transform={transform}>
-					<Axis h={height} axis={yAxis} axisType="y" text="Hello" />
-					<Axis h={height} axis={xAxis} axisType="x" text="Hi" />
+					<Axis h={height} axis={yAxis} axisType="y" text="Potential (V)" />
+					<Axis h={height} axis={xAxis} axisType="x" text="Current (A)" />
 
 					{ lines }
 					{ actual }
