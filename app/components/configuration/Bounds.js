@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:55:50
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 15:09:49
+* @Last Modified time: 2016-12-01 18:35:49
 */
 
 'use strict';
@@ -13,11 +13,11 @@ import { FormGroup, FormControl, ControlLabel, Col, Code } from 'react-bootstrap
 const Bounds = ({bound, onChange}) => {
 
 	const handleLowerChange = (e) => {
-		onChange(bound, "lower", e.target.value);
+		onChange(bound, "lower", parseFloat(e.target.value));
 	}
 
 	const handleUpperChange = (e) => {
-		onChange(bound, "upper", e.target.value);
+		onChange(bound, "upper", parseFloat(e.target.value));
 	}
 
 	return (<FormGroup controlId={"formHorizontal_bounds_" + bound.get("id")}>

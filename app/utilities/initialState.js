@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 13:24:23
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 13:20:35
+* @Last Modified time: 2016-12-01 18:58:14
 */
 
 'use strict';
@@ -36,8 +36,8 @@ export const configuration = () => Immutable.Map({
 		maxCurrent: AlgorithmParameter("maxCurrent", "Maximum current (A)", 20),
 		genCount: AlgorithmParameter("genCount", "Number of generations", 100), 
 		birthRate: AlgorithmParameter("birthRate", "Child rate per couple", 2), 
-		mRate: AlgorithmParameter("mRate", "Rate of mutation", 0.008), 
-		pSize: AlgorithmParameter("pSize", "Population Size", 100),
+		mRate: AlgorithmParameter("mRate", "Rate of mutation", 0.002), 
+		pSize: AlgorithmParameter("pSize", "Population Size", 400),
 		gaSeed: AlgorithmParameter("gaSeed", "PRG Seed", 123)
 	})
 })

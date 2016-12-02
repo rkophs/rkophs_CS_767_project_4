@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-12-01 13:45:44
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 15:02:25
+* @Last Modified time: 2016-12-01 18:39:27
 */
 
 'use strict';
@@ -22,7 +22,7 @@ const TextResults = ({run}) => {
 		{ bests.map((gen, i) => {
 			const dna = gen.dna.map(d => d.toFixed(7))
 			const fitness = gen.fitness
-			const sse = `Sum of Error Squared: ${(1/fitness).toFixed(7)} `
+			const sse = `Fitness: ${(1/fitness).toFixed(7)} `
 			const soln = `{x1: ${dna[0]}, 
 							x2: ${dna[1]}, 
 							x3: ${dna[2]}, 

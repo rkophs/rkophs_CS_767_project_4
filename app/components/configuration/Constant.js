@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:55:50
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 14:07:47
+* @Last Modified time: 2016-12-01 18:37:50
 */
 
 'use strict';
@@ -13,7 +13,7 @@ import { FormGroup, FormControl, ControlLabel, Col, Code } from 'react-bootstrap
 const Constant = ({constant, onChange}) => {
 
 	const handleChange = (e) => {
-		onChange(constant, e.target.value);
+		onChange(constant, parseFloat(e.target.value));
 	}
 
 	return (<FormGroup controlId={"formHorizontal_constants_" + constant.get("id")}>

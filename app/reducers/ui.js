@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 17:28:21
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 13:39:28
+* @Last Modified time: 2016-12-01 18:39:17
 */
 
 'use strict';
@@ -16,7 +16,6 @@ const uiReducer = (state = ui(), action) => {
 		case 'CHANGE_RUN_DISPLAY':
 			return state.merge(Immutable.Map({ visibleRun: action.id}));
 		case 'CHANGE_SPEED':
-			console.log("resetting speed: " + action.speed)
 			return state.merge(Immutable.Map({ speed: action.speed}));
 		default:
 			return state;

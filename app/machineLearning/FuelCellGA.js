@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-23 16:19:53
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 12:35:44
+* @Last Modified time: 2016-12-01 18:22:44
 */
 
 'use strict';
@@ -12,6 +12,8 @@ import GA from './GeneticAlgorithm'
 import fuelCellBuilder from './FuelCell'
 import GeneticIndividual from './GeneticIndividual'
 import PRG from '../utilities/PRG'
+import GaussianNoise from '../utilities/GaussianNoise'
+import Range from '../utilities/Range'
 
 const voltage = (i, params, fuelCellV) => {
 	const res = fuelCellV(i, params.get(0), params.get(1), 
@@ -27,8 +29,9 @@ const fuelCellV = (params) => {
 }
 
 const actualStack = (prg, fuelCellV, noise, params, maxCurrent) => {
-	return Immutable.List(Array(maxCurrent)).map((v, i) => {
-		return voltage(i + 1, params, fuelCellV);
+	return Range(1, maxCurrent).map((i) => {
+		const n = GaussianNoise(prg, 1/3, 0)
+		return voltage(i, params, fuelCellV) + n;
 	});
 };
 
@@ -39,10 +42,10 @@ const randomChr = (prg, b) => {
 const fuelCellIndividualBuilder = (prg, fcConstants, 
 	fcGAParams, actual, fcCalc) => {
 
-	const currents = Immutable.List(Array(fcGAParams.maxCurrent()));
+	const currents = Range(1, fcGAParams.maxCurrent())
 
 	const crossover = (prg, count, dna1, dna2) => {
-		return Immutable.List(Array(count)).map(i => {
+		return Range(0, count).map(i => {
 			return dna1.map((c1, k) => {
 				return prg.random() <= 0.5 ? c1 : dna2.get(k);
 			}); 
@@ -57,8 +60,8 @@ const fuelCellIndividualBuilder = (prg, fcConstants,
 	};
 
 	const solution = (params) => {
-		return currents.map((_, i) => {
-			return voltage(i+1, params, fcCalc);
+		return currents.map((i) => {
+			return voltage(i, params, fcCalc);
 		});
 	}
 
@@ -114,11 +117,10 @@ export const fuelCellGARun = (seed, fcConstants, fcGAParams, quit, then) => {
 
 	const builder = fuelCellIndividualBuilder(prg, fcConstants, fcGAParams, actual, fcCalc);
 
-	const population = Immutable.List(Array(fcGAParams.populationSize()))
-		.map(i => {
-			const dna = fcGAParams.fuelCellParamBounds().map(bound => randomChr(prg, bound));
-			return builder(dna);
-		});
+	const population = Range(0, fcGAParams.populationSize()).map(i => {
+		const dna = fcGAParams.fuelCellParamBounds().map(bound => randomChr(prg, bound));
+		return builder(dna)
+	})
 
 	GA(prg, population, fcGAParams.genCount(), 
 		fcGAParams.birthRate(), 

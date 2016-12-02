@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 16:44:03
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 14:03:46
+* @Last Modified time: 2016-12-01 17:59:21
 */
 
 'use strict';
@@ -91,10 +91,13 @@ export const runGA = (bounds, constants, gaParams, quit, then) => {
 			yBounds: [yMin, yMax],
 			lines: lines,
 			bests: bests,
-			actualStack: actualStack
+			actualStack: actualStack,
+			solution: solution
 		})
 	}
 
-	fuelCellGARun(seed, fcConstants, fcParams, quit, (r, s) => then(normalize(r), s));
+	fuelCellGARun(seed, fcConstants, fcParams, quit, (r, s) => {
+		s ? then(normalize(r), s) : then(r, s)
+	});
 }
 

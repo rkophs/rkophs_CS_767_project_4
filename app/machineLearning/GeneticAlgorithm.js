@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-09 11:06:47
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 12:39:44
+* @Last Modified time: 2016-12-01 18:38:18
 */
 
 'use strict';
@@ -12,10 +12,11 @@ import PRG from '../utilities/PRG'
 
 const chooseIndividual = (prg, population, fitnessSum) => {
 	let randSelect = prg.random() * fitnessSum;
-	return population.findEntry((individual) => {
+	const result = population.findEntry((individual) => {
 		randSelect -= individual.fitness();
 		return randSelect <= 0;
 	}, population);
+	return result
 }
 
 const getFitnessSum = population => {
@@ -58,10 +59,18 @@ const GA = (prg, initialPopulation, gCount, birthRate, mRate, quit, then) => {
 	let interval;
 
 	const iteration = (i) => {
-		pop = generation(prg, pop, birthRate, mRate);
-		const fittest = getFittest(pop);
-		let g = Immutable.Map({population: pop, fittest: fittest});
-		generations.push(g);
+		let g
+		try {
+			pop = generation(prg, pop, birthRate, mRate);
+			const fittest = getFittest(pop);
+			g = Immutable.Map({population: pop, fittest: fittest});
+			generations.push(g);
+		} catch (e) {
+			console.log(e)
+			clearInterval(interval)
+			then(Immutable.Map({}), false);
+			return
+		}
 
 		const stop = quit()
 		if (i >= gCount - 1 || stop) {

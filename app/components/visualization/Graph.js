@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 21:09:33
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 13:52:36
+* @Last Modified time: 2016-12-01 17:11:18
 */
 
 'use strict';
@@ -64,6 +64,7 @@ class Graph extends React.Component {
 		this.yBounds = this.props.run.get("yBounds")
 		const actual = this.props.run.get("actualStack")
 		const approx = lines[lines.length - 1]
+		this.solution = this.props.run.get("solution")
 
 		this.margin = {top: 20, right: 80, bottom: 30, left: 50};
 		this.width = this.props.containerWidth - this.margin.left - this.margin.right;
@@ -71,7 +72,7 @@ class Graph extends React.Component {
 		this.transform = `translate(${this.margin.left},${this.margin.top})`
 
 		const x = d3.scaleLinear()
-			.domain([this.xBounds[0]-1, this.xBounds[1]*1.1])
+			.domain([this.xBounds[0], this.xBounds[1]*1.1])
 			.rangeRound([0, this.width]);
 
 		const y = d3.scaleLinear()
@@ -87,7 +88,7 @@ class Graph extends React.Component {
 			.ticks(Math.floor(this.xBounds[1]));
 
 		const line = d3.line()
-			.x(d => x(d[0]))
+			.x(d => x(d[0] + 1))
         	.y(d => y(d[1]))
 
 		this.paths = lines.map((l, j) => {
@@ -122,8 +123,15 @@ class Graph extends React.Component {
 			<div>
 				<h4>Genetic Algorithm Run</h4>
 				<Row className="show-grid">
-					<Col sm={2}><h6>Generation {i} of {this.iMax - 1}</h6></Col>
-					<Col sm={2}><h6>Time per animation frame, (ms):</h6></Col>
+					<Col sm={2}>
+						<h6>Generation {i} of {this.iMax - 1}</h6>
+					</Col>
+					<Col sm={2}>
+						<h6>Best fitness: {(1/this.solution.fitness()).toFixed(7)}</h6>
+					</Col>
+					<Col sm={2}>
+						<h6>Time per animation frame, (ms):</h6>
+					</Col>
 					<Col sm={1}>
 						<FormControl defaultValue={this.props.ui.get("speed")}
 							onChange={this.handleSpeedChange} />
