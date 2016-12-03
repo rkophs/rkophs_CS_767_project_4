@@ -1,5 +1,6 @@
 
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
+import style from "./style/style.css"
 
 import React from 'react'
 import { render } from 'react-dom'
