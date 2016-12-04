@@ -17,8 +17,8 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			{ 
-				test: /\.(js|jsx)$/, 
+			{
+				test: /\.(js|jsx)$/,
 				loader: 'babel-loader',
 				include: /app/,
 				exclude: /node_modules/,
@@ -28,6 +28,9 @@ module.exports = {
 			},{
 				test: /\.css$/,
 				loader: 'style-loader!css-loader'
+			},{
+				test: /\.scss$/,
+				loader: 'style-loader!css-loader!sass-loader'
 			},{
 				test: /\.(json|ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
 				loader: 'file-loader',

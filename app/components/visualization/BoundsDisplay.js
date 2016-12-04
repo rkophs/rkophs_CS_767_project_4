@@ -11,18 +11,23 @@ import React, { PropTypes } from 'react'
 
 const BoundsDisplay = ({bounds}) => {
 	return (
-		<div>
+		<div className='results-data'>
 			<h4>Fuel Cell Optimization Bounds</h4>
-			{bounds.valueSeq().map(bound => {
-				return (<h6 key={`display_${bound.get("id")}`} >
-					<code>{bound.get("html")}</code> 
-					{bound.get("description")}&nbsp;(Lower, Upper, Actual):&nbsp; 
-					(<code>{bound.get("lower").toFixed(7)}</code>,
-					<code>{bound.get("upper").toFixed(7)}</code>,
-					<code>{bound.get("actual").toFixed(7)}</code>)
-				</h6>)
-			})}
-		</div>)
+				{bounds.valueSeq().map(bound => {
+					return (
+						<h6 key={`display_${bound.get("id")}`} >
+							<code>{bound.get("html")}</code>
+							{`${bound.get("description")}  (Lower, Upper, Actual) `}
+							(
+								<code>{bound.get("lower").toFixed(7)}</code>,
+								<code>{bound.get("upper").toFixed(7)}</code>,
+								<code>{bound.get("actual").toFixed(7)}</code>
+							)
+						</h6>
+					)}
+				)}
+		</div>
+	)
 }
 
 export default BoundsDisplay

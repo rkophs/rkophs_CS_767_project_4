@@ -8,7 +8,6 @@
 'use strict';
 
 import React, { PropTypes } from 'react'
-import Loader from 'react-loader'
 import Dimensions from 'react-dimensions'
 import {FormControl, Col, Row} from 'react-bootstrap';
 import Plot from './Plot'
@@ -31,7 +30,7 @@ class Graph extends React.Component {
 	}
 
 	restart() {
-		if (this.props.run.get("status") == "SUCCESS" 
+		if (this.props.run.get("status") == "SUCCESS"
 			&& !this.props.run.get("loading")) {
 			this.getPaths()
 			this.iMax = this.props.run.get("lines").length
@@ -108,7 +107,7 @@ class Graph extends React.Component {
 		const speed = this.props.ui.get("speed")
 		if (this.props.run.get("loading")) {
 			this.reset(-1)
-			return <Loader loaded={false} />
+			return null;
 		}
 
 		if (runId != this.runId || speed != this.speed) {
@@ -133,20 +132,25 @@ class Graph extends React.Component {
 						<h6>Time per animation frame, (ms):</h6>
 					</Col>
 					<Col sm={1}>
-						<FormControl defaultValue={this.props.ui.get("speed")}
-							onChange={this.handleSpeedChange} />
+						<FormControl
+							defaultValue={this.props.ui.get("speed")}
+							onChange={this.handleSpeedChange}
+						/>
 					</Col>
 				</Row>
-				<Plot lines={this.paths.slice(0, i)} 
-						actual={this.actual}
-						approx={this.approx}
-						yBounds={this.yBounds}
-						xBounds={this.xBounds}
-						margin={this.margin}
-						xAxis={this.xAxis}
-						yAxis={this.yAxis}
-						height={this.height} />
-			</div>)
+				<Plot
+					lines={this.paths.slice(0, i)}
+					actual={this.actual}
+					approx={this.approx}
+					yBounds={this.yBounds}
+					xBounds={this.xBounds}
+					margin={this.margin}
+					xAxis={this.xAxis}
+					yAxis={this.yAxis}
+					height={this.height}
+				/>
+			</div>
+		)
 	}
 }
 

@@ -16,11 +16,21 @@ const AlgorithmConfig = ({param, onChange}) => {
 		onChange(param, parseFloat(e.target.value));
 	}
 
-	return (<FormGroup controlId={"formHorizontal_algorithm_" + param.get("id")}>
-		<Col componentClass={ControlLabel} sm={8}><h6>{param.get("description")}</h6></Col>
-		<Col sm={4}><FormControl defaultValue={param.get("value")} 
-								onChange={handleChange} /></Col>
-	</FormGroup>)
+	return (
+		<FormGroup controlId={`formHorizontal_algorithm_${param.get("id")}`}>
+			<Col
+				componentClass={ControlLabel}
+				sm={2}>
+				<h6>{param.get("description")}</h6>
+			</Col>
+			<Col sm={2}>
+				<FormControl
+					defaultValue={param.get("value")}
+					onChange={handleChange}
+				/>
+			</Col>
+		</FormGroup>
+	)
 }
 
 export default AlgorithmConfig

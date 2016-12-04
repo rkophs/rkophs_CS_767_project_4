@@ -1,0 +1,109 @@
+/*
+* @Author: ryan
+* @Date:   2016-12-03 14:49:24
+* @Last Modified by:   Ryan Kophs
+* @Last Modified time: 2016-12-04 17:25:18
+*/
+
+.results-panel {
+	margin-top: 20px;
+}
+
+.results-list {
+    border-right: 1px solid #ddd;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    padding: 0px;
+}
+
+.results-items {
+	width: 100%;
+	border-radius: 0px;
+	border: none;
+	box-shadow: none;
+}
+
+.results-label {
+	padding-left: 20px;
+}
+
+.results-graph {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.results-data {
+	padding-top: 20px;
+}
+
+.row.is-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.row.is-flex > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+.row.is-flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.row.is-flex > [class*='col-'] {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+
+.mouse-line {
+    stroke: black;
+    stroke-width: 1px;
+    opacity: 0;
+}
+
+.axis--x path {
+	display: none;
+}
+
+.line {
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 1px;
+}
+
+.line_approx {
+	fill: none;
+	stroke: lightcoral;
+	stroke-width: 3px;
+}
+
+.line_actual {
+	fill: none;
+	stroke: springgreen;
+	stroke-width: 4px;
+}
+
+.text_results {
+	white-space: nowrap;
+	height: 700px;
+	overflow: scroll;
+}
+
+.run_configuration {
+	white-space: nowrap;
+	height: 700px;
+	overflow: scroll;
+}

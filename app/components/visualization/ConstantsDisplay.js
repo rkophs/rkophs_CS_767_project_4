@@ -11,16 +11,19 @@ import React, { PropTypes } from 'react'
 
 const ConstantsDisplay = ({constants}) => {
 	return (
-		<div>
+		<div className='results-data'>
 			<h4>Fuel Cell Constants</h4>
-			{constants.valueSeq().map(constant => {
-				return (<h6 key={`display_${constant.get("id")}`} >
-					<code>{constant.get("html")}</code>
-					&nbsp;{constant.get("description")}:&nbsp;
-					<code>{constant.get("value").toFixed(7)}</code>
-				</h6>)
-			})}
-		</div>)
+				{constants.valueSeq().map(constant => {
+					return (
+						<h6 key={`display_${constant.get("id")}`} >
+							<code>{constant.get("html")}</code>
+							&nbsp;{constant.get("description")}:&nbsp;
+							<code>{constant.get("value").toFixed(7)}</code>
+						</h6>
+					)}
+				)}
+		</div>
+	)
 }
 
 export default ConstantsDisplay

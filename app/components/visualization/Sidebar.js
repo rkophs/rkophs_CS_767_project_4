@@ -16,14 +16,22 @@ const Sidebar = ({ui, count, onRunChange}) => {
 
 	const buttons = []
 	for (let i = 0; i < count; i++) {
-		buttons.push(<Button key={`sidebar_${i}`} onClick={() => onRunChange(i)}
-						active={i == visible}>{`Run: ${i + 1}`}</Button>)
+		buttons.push(
+			<Button
+				key={`sidebar_${i}`}
+				onClick={() => onRunChange(i)}
+				active={i == visible}
+				className='results-items'
+			>
+				{`Run: ${i + 1}`}
+			</Button>
+		)
 	}
 
 	return (
 		<div>
-			<h4>Run History</h4>
-			{buttons}
+			<h4 className='results-label'>Run History</h4>
+			<div> {buttons} </div>
 		</div>
 	)
 }

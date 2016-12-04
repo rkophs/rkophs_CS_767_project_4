@@ -1,0 +1,15 @@
+/*
+* @Author: ryan
+* @Date:   2016-12-03 14:49:24
+* @Last Modified by:   Ryan Kophs
+* @Last Modified time: 2016-12-04 17:25:13
+*/
+
+body, html {
+	height: 100%;
+	padding: 0;
+}
+
+.btn:focus, .btn:active {
+   outline: none !important;
+}

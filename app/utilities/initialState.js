@@ -32,11 +32,11 @@ export const configuration = () => Immutable.Map({
 		B: Bounds("B", "B", "Concentration loss, V", 0.0136, 0.5, 0.02914489)
 	}),
 	ga: Immutable.Map({
-		noise: AlgorithmParameter("noise", "Simulation noise, [0,1]", 0.3), 
+		noise: AlgorithmParameter("noise", "Simulation noise, [0,1]", 0.3),
 		maxCurrent: AlgorithmParameter("maxCurrent", "Maximum current (A)", 20),
-		genCount: AlgorithmParameter("genCount", "Number of generations", 100), 
-		birthRate: AlgorithmParameter("birthRate", "Child rate per couple", 2), 
-		mRate: AlgorithmParameter("mRate", "Rate of mutation", 0.005), 
+		genCount: AlgorithmParameter("genCount", "Number of generations", 100),
+		birthRate: AlgorithmParameter("birthRate", "Child rate per couple", 2),
+		mRate: AlgorithmParameter("mRate", "Rate of mutation", 0.005),
 		pSize: AlgorithmParameter("pSize", "Population Size", 400),
 		gaSeed: AlgorithmParameter("gaSeed", "PRG Seed", 123)
 	})
