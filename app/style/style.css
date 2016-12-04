@@ -1,0 +1,40 @@
+/*
+* @Author: ryan
+* @Date:   2016-12-03 14:49:24
+* @Last Modified by:   Ryan Kophs
+* @Last Modified time: 2016-12-03 15:04:21
+*/
+
+.axis--x path {
+	display: none;
+}
+
+.line {
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 1px;
+}
+
+.line_approx {
+	fill: none;
+	stroke: lightcoral;
+	stroke-width: 3px;
+}
+
+.line_actual {
+	fill: none;
+	stroke: springgreen;
+	stroke-width: 4px;
+}
+
+.text_results {
+	white-space: nowrap;
+	height: 700px;
+	overflow: scroll;
+}
+
+.run_configuration {
+	white-space: nowrap;
+	height: 700px;
+	overflow: scroll;
+}
