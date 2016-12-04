@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 12:41:13
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 14:27:12
+* @Last Modified time: 2016-12-04 17:27:11
 */
 
 'use strict';
@@ -16,23 +16,14 @@ import RunConfiguration from './visualization/RunConfiguration'
 import Loader from 'react-loader'
 import '../style/modules/visualization.scss'
 
-
-		// if (this.props.run.get("loading")) {
-		// 	this.reset(-1)
-		// 	return <Loader loaded={false} />
-		// }
-
-
 const Visualization = ({ui, calculations, onRunChange, onSpeedChange}) => {
 
 	const visibleRun = ui.get("visibleRun");
 
-	if (calculations.size == 0) return null;
-
-	if (calculations.get(visibleRun).get('loading')) {
-		console.log("LOADING");
+	if (calculations.size == 0) {
+		return null;
 	}
-
+	
 	return (
 		<Panel
 			header={`Results: ${calculations.size}`}

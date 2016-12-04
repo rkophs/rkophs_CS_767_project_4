@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-12-01 13:45:44
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 14:49:08
+* @Last Modified time: 2016-12-04 17:30:19
 */
 
 'use strict';
@@ -23,7 +23,7 @@ const RunConfiguration = ({run}) => {
 	return (
 		<div className="run_configuration" >
 			<AlgorithmConfigDisplay params={gaParams} />
-			<BoundsDisplay  bounds={bounds} />
+			<BoundsDisplay bounds={bounds} />
 			<ConstantsDisplay constants={constants} />
 		</div>
 	)
