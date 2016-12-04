@@ -20,21 +20,28 @@ const Bounds = ({bound, onChange}) => {
 		onChange(bound, "upper", parseFloat(e.target.value));
 	}
 
-	return (<FormGroup controlId={"formHorizontal_bounds_" + bound.get("id")}>
-		<Col componentClass={ControlLabel} sm={3}><h6><code>{bound.get("html")}</code>{bound.get("description")}</h6></Col>
-		<Col sm={3}>
-			<FormControl defaultValue={bound.get("lower")} 
-						onChange={handleLowerChange} />
-		</Col>
-		<Col sm={3}>
-			<FormControl defaultValue={bound.get("upper")}
-						onChange={handleUpperChange} />
-		</Col>
-		<Col sm={3}>
-			<FormControl defaultValue={bound.get("actual")}
-						onChange={handleUpperChange} />
-		</Col>
-	</FormGroup>)
+	return (
+		<FormGroup controlId={"formHorizontal_bounds_" + bound.get("id")}>
+			<Col componentClass={ControlLabel} sm={2}>
+				<h6>
+					<code>{bound.get("html")}</code>
+					{bound.get("description")}
+				</h6>
+			</Col>
+			<Col sm={2}>
+				<FormControl defaultValue={bound.get("lower")}
+							onChange={handleLowerChange} />
+			</Col>
+			<Col sm={2}>
+				<FormControl defaultValue={bound.get("upper")}
+							onChange={handleUpperChange} />
+			</Col>
+			<Col sm={2}>
+				<FormControl defaultValue={bound.get("actual")}
+							onChange={handleUpperChange} />
+			</Col>
+		</FormGroup>
+	)
 }
 
 export default Bounds

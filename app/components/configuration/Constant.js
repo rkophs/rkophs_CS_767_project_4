@@ -16,11 +16,24 @@ const Constant = ({constant, onChange}) => {
 		onChange(constant, parseFloat(e.target.value));
 	}
 
-	return (<FormGroup controlId={"formHorizontal_constants_" + constant.get("id")}>
-		<Col componentClass={ControlLabel} sm={8}><h6><code>{constant.get("html")}</code> {constant.get("description")}</h6></Col>
-		<Col sm={4}><FormControl defaultValue={constant.get("value")} 
-								onChange={handleChange} /></Col>
-	</FormGroup>)
+	return (
+		<FormGroup controlId={`formHorizontal_constants_${constant.get("id")}`}>
+			<Col
+				componentClass={ControlLabel}
+				sm={2}>
+				<h6>
+					<code> {constant.get("html")} </code>
+					{constant.get("description")}
+				</h6>
+			</Col>
+			<Col sm={2}>
+				<FormControl
+					defaultValue={constant.get("value")}
+					onChange={handleChange}
+				/>
+			</Col>
+		</FormGroup>
+	)
 }
 
 export default Constant

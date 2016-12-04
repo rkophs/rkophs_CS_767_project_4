@@ -8,26 +8,25 @@
 'use strict';
 
 import React, { PropTypes } from 'react'
-import Loader from 'react-loader'
 import AlgorithmConfigDisplay from './AlgorithmConfigDisplay'
 import BoundsDisplay from './BoundsDisplay'
 import ConstantsDisplay from './ConstantsDisplay'
 
 const RunConfiguration = ({run}) => {
 
-	if (run.get("loading")) {
-		return <Loader loaded={false} />
-	}
+	if (run.get("loading")) return null;
 
 	const gaParams = run.get("gaParams")
 	const bounds = run.get("bounds")
 	const constants = run.get("constants")
 
-	return (<div className="run_configuration" >
+	return (
+		<div className="run_configuration" >
 			<AlgorithmConfigDisplay params={gaParams} />
-			<BoundsDisplay bounds={bounds} />
+			<BoundsDisplay  bounds={bounds} />
 			<ConstantsDisplay constants={constants} />
-		</div>)
+		</div>
+	)
 }
 
 export default RunConfiguration

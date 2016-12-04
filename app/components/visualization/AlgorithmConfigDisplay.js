@@ -14,12 +14,15 @@ const AlgorithmConfigDisplay = ({params}) => {
 		<div>
 			<h4>Algorithm Parameters</h4>
 			{params.valueSeq().map(param => {
-				return (<h6 key={`display_${param.get("id")}`} >
-					{param.get("description")}&nbsp;
-					<code>{param.get("value").toFixed(7)}</code>
-				</h6>)
-			})}
-		</div>)
+				return (
+					<h6 key={`display_${param.get("id")}`} >
+						{`${param.get("description")} `}
+						<code>{param.get("value").toFixed(7)}</code>
+					</h6>
+				)}
+			)}
+		</div>
+	)
 }
 
 export default AlgorithmConfigDisplay

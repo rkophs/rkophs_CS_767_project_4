@@ -8,9 +8,11 @@ const App = ({state}) => {
 
 	return (
 		<Grid fluid={true} >
+			<h2>BU MET CS 767 Machine Learning Final Project</h2>
 			<Configuration />
 			<Visualization />
-		</Grid>)
+		</Grid>
+	)
 }
 
 export default App

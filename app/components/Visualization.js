@@ -8,45 +8,71 @@
 'use strict';
 
 import React, { PropTypes } from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Panel } from 'react-bootstrap'
 import Sidebar from './visualization/Sidebar'
 import Graph from './visualization/Graph'
 import TextResults from './visualization/TextResults'
 import RunConfiguration from './visualization/RunConfiguration'
+import Loader from 'react-loader'
+import '../style/modules/visualization.scss'
+
+
+		// if (this.props.run.get("loading")) {
+		// 	this.reset(-1)
+		// 	return <Loader loaded={false} />
+		// }
+
 
 const Visualization = ({ui, calculations, onRunChange, onSpeedChange}) => {
 
 	const visibleRun = ui.get("visibleRun");
 
+	if (calculations.size == 0) return null;
+
+	if (calculations.get(visibleRun).get('loading')) {
+		console.log("LOADING");
+	}
+
 	return (
-		<Row className="show-grid">
-			<Col sm={1} >
-				<Sidebar ui={ui}
-					count={calculations.size}	
-					onRunChange={onRunChange} />
-			</Col>
-			<Col sm={11} >
-				{ visibleRun < 0 ? 
-					(<div></div>) : 
-					(<div>
-						<Row className="show-grid">
-							<Col sm={12}>
-								<Graph run={calculations.get(visibleRun)} ui={ui} 
-								onSpeedChange={onSpeedChange} />
-							</Col>
-						</Row>
-						<Row className="show-grid">
-							<Col sm={6}>
-								<TextResults run={calculations.get(visibleRun)} />
-							</Col>
-							<Col sm={6}>
-								<RunConfiguration run={calculations.get(visibleRun)} />
-							</Col>
-						</Row>
-					</div>)}
-			</Col>
-		</Row>
-	)	
+		<Panel
+			header={`Results: ${calculations.size}`}
+			className='results-panel'
+		>
+			<Row className='show-grid is-flex'>
+				<Col sm={1} className='results-list'>
+					<Sidebar ui={ui}
+						count={calculations.size}
+						onRunChange={onRunChange} />
+				</Col>
+				<Col sm={11} >
+					{ visibleRun < 0 ?
+						(<div></div>) :
+						(<div>
+							{calculations.get(visibleRun).get('loading') ?
+								(<Loader loaded={false} />) :
+								(<div>
+									<Row className='show-grid results-graph'>
+										<Col sm={12}>
+											<Graph run={calculations.get(visibleRun)} ui={ui}
+											onSpeedChange={onSpeedChange} />
+										</Col>
+									</Row>
+									<Row className='show-grid results-data'>
+										<Col sm={6}>
+											<TextResults run={calculations.get(visibleRun)} />
+										</Col>
+										<Col sm={6}>
+											<RunConfiguration run={calculations.get(visibleRun)} />
+										</Col>
+									</Row>
+								</div>)
+							}
+						</div>)
+					}
+				</Col>
+			</Row>
+		</Panel>
+	)
 }
 
 export default Visualization
