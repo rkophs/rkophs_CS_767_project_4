@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-12-01 13:45:44
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-04 17:30:19
+* @Last Modified time: 2016-12-05 14:55:19
 */
 
 'use strict';
@@ -16,13 +16,13 @@ const RunConfiguration = ({run}) => {
 
 	if (run.get("loading")) return null;
 
-	const gaParams = run.get("gaParams")
+	const params = run.get("params")
 	const bounds = run.get("bounds")
 	const constants = run.get("constants")
 
 	return (
 		<div className="run_configuration" >
-			<AlgorithmConfigDisplay params={gaParams} />
+			<AlgorithmConfigDisplay params={params} />
 			<BoundsDisplay bounds={bounds} />
 			<ConstantsDisplay constants={constants} />
 		</div>

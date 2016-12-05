@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-28 13:24:23
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 19:35:32
+* @Last Modified time: 2016-12-05 16:56:11
 */
 
 'use strict';
@@ -31,14 +31,25 @@ export const configuration = () => Immutable.Map({
 		Rc: Bounds("R(c)", "Rc", "Resistance, Ohms", 0.0001, 0.0008, 0.0001),
 		B: Bounds("B", "B", "Concentration loss, V", 0.0136, 0.5, 0.02914489)
 	}),
+	jps: Immutable.Map({
+		jps_noise: AlgorithmParameter("jps_noise", "Simulation noise, [0,1]", 0.3),
+		jps_maxCurrent: AlgorithmParameter("jps_maxCurrent", "Maximum current (A)", 20),
+		jps_targetCost: AlgorithmParameter("jps_targetCost", "Target cost (end condition)", 1.2),
+		jps_maxEvals: AlgorithmParameter("jps_maxEvals", "Number of iterations", 1000),
+		jps_evalFrac: AlgorithmParameter("jps_evalFrac", "Evaluation fraction, [0, 1]", 0.1),
+		jps_alpha: AlgorithmParameter("jps_alpha", "Alpha, [0, 1]", 0.999),
+		jps_mRate: AlgorithmParameter("jps_mRate", "Rate of mutation", 0.2),
+		jps_pSize: AlgorithmParameter("jps_pSize", "Population Size", 400),
+		jps_seed: AlgorithmParameter("jps_seed", "PRG Seed", 123)
+	}),
 	ga: Immutable.Map({
-		noise: AlgorithmParameter("noise", "Simulation noise, [0,1]", 0.3),
-		maxCurrent: AlgorithmParameter("maxCurrent", "Maximum current (A)", 20),
-		genCount: AlgorithmParameter("genCount", "Number of generations", 100),
-		birthRate: AlgorithmParameter("birthRate", "Child rate per couple", 2),
-		mRate: AlgorithmParameter("mRate", "Rate of mutation", 0.005),
-		pSize: AlgorithmParameter("pSize", "Population Size", 400),
-		gaSeed: AlgorithmParameter("gaSeed", "PRG Seed", 123)
+		ga_noise: AlgorithmParameter("ga_noise", "Simulation noise, [0,1]", 0.3),
+		ga_maxCurrent: AlgorithmParameter("ga_maxCurrent", "Maximum current (A)", 20),
+		ga_genCount: AlgorithmParameter("ga_genCount", "Number of generations", 100),
+		ga_birthRate: AlgorithmParameter("ga_birthRate", "Child rate per couple", 2),
+		ga_mRate: AlgorithmParameter("ga_mRate", "Rate of mutation", 0.1),
+		ga_pSize: AlgorithmParameter("ga_pSize", "Population Size", 400),
+		ga_seed: AlgorithmParameter("ga_seed", "PRG Seed", 123)
 	})
 })
 

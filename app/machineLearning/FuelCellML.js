@@ -2,13 +2,14 @@
 * @Author: ryan
 * @Date:   2016-11-23 16:19:53
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 18:22:44
+* @Last Modified time: 2016-12-05 16:23:47
 */
 
 'use strict';
 
 import Immutable from 'immutable'
 import GA from './GeneticAlgorithm'
+import JPS from './JPSAlgorithm'
 import fuelCellBuilder from './FuelCell'
 import GeneticIndividual from './GeneticIndividual'
 import PRG from '../utilities/PRG'
@@ -40,9 +41,9 @@ const randomChr = (prg, b) => {
 };
 
 const fuelCellIndividualBuilder = (prg, fcConstants, 
-	fcGAParams, actual, fcCalc) => {
+	fcMLParams, actual, fcCalc) => {
 
-	const currents = Range(1, fcGAParams.maxCurrent())
+	const currents = Range(1, fcMLParams.maxCurrent())
 
 	const crossover = (prg, count, dna1, dna2) => {
 		return Range(0, count).map(i => {
@@ -55,7 +56,7 @@ const fuelCellIndividualBuilder = (prg, fcConstants,
 	const mutate = (prg, rate, dna) => {
 		return dna.map((chr, i) => {
 			return prg.random() > rate ? chr : 
-				randomChr(prg, fcGAParams.fuelCellParamBounds().get(i));
+				randomChr(prg, fcMLParams.fuelCellParamBounds().get(i));
 		});
 	};
 
@@ -65,15 +66,18 @@ const fuelCellIndividualBuilder = (prg, fcConstants,
 		});
 	}
 
-	const fitness = (params) => {
-		const sse = solution(params).reduce((a, c, i) => {
+	const cost = (params) => {
+		return solution(params).reduce((a, c, i) => {
 			const err = actual.get(i) - c;
 			return a + (err * err);
 		}, 0);
-		return 1/sse;
+	}
+
+	const fitness = (params) => {
+		return 1/cost(params);
 	};
 
-	return GeneticIndividual(crossover, mutate, fitness, solution);
+	return GeneticIndividual(crossover, mutate, fitness, cost, solution);
 };
 
 export const fuelCellParams = (n1, n2, n3, n4, y, rC, b) => {
@@ -105,26 +109,50 @@ export const fuelCellGAParams = (noise, paramBounds, actualFcParams,
 	}
 };
 
-export const fuelCellGARun = (seed, fcConstants, fcGAParams, quit, then) => {
+export const fuelCellJPSParams = (noise, paramBounds, actualFcParams, 
+	maxCurrent, targetCost, maxEvals, evalFrac, alpha, mRate, pSize) => {
+	return {
+		noise: () => noise,
+		fuelCellParamBounds: () => paramBounds,
+		actualFuelCellParams: () => actualFcParams,
+		maxCurrent: () => maxCurrent,
+		targetCost: () => targetCost,
+		maxEvals: () => maxEvals,
+		evalFrac: () => evalFrac,
+		alpha: () => alpha,
+		mRate: () => mRate,
+		populationSize: () => pSize
+	}
+};
+
+export const fuelCellRun = (type) => (seed, fcConstants, fcMLParams, quit, then) => {
 	const prg = new PRG(seed);
-
 	const fcCalc = fuelCellV(fcConstants);
-
 	const actual = actualStack(prg, fcCalc,
-		fcGAParams.noise(), 
-		fcGAParams.actualFuelCellParams(),
-		fcGAParams.maxCurrent());
+		fcMLParams.noise(), 
+		fcMLParams.actualFuelCellParams(),
+		fcMLParams.maxCurrent());
 
-	const builder = fuelCellIndividualBuilder(prg, fcConstants, fcGAParams, actual, fcCalc);
-
-	const population = Range(0, fcGAParams.populationSize()).map(i => {
-		const dna = fcGAParams.fuelCellParamBounds().map(bound => randomChr(prg, bound));
+	const builder = fuelCellIndividualBuilder(prg, fcConstants, fcMLParams, actual, fcCalc);
+	const population = Range(0, fcMLParams.populationSize()).map(i => {
+		const dna = fcMLParams.fuelCellParamBounds().map(bound => randomChr(prg, bound));
 		return builder(dna)
 	})
 
-	GA(prg, population, fcGAParams.genCount(), 
-		fcGAParams.birthRate(), 
-		fcGAParams.mRate(), 
-		quit, 
-		(result, success) => then(result.merge(Immutable.Map({actualStack: actual})), success))
+	const finish = (res, status) => 
+		then(res.merge(Immutable.Map({actualStack: actual})), status)
+
+	switch (type) {
+		case 'JPS':
+			JPS(prg, population, fcMLParams.targetCost(), 
+				fcMLParams.alpha(), fcMLParams.maxEvals(), 
+				fcMLParams.evalFrac(), fcMLParams.mRate(),  
+				quit, finish)
+			break;
+		case 'GA':
+			GA(prg, population, fcMLParams.genCount(), 
+				fcMLParams.birthRate(), fcMLParams.mRate(), 
+				quit, finish)
+			break;
+	}
 };
