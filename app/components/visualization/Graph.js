@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 21:09:33
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-01 17:11:18
+* @Last Modified time: 2016-12-05 17:03:31
 */
 
 'use strict';
@@ -64,6 +64,8 @@ class Graph extends React.Component {
 		const actual = this.props.run.get("actualStack")
 		const approx = lines[lines.length - 1]
 		this.solution = this.props.run.get("solution")
+		this.title = this.props.run.get("type") == 'GA' ?
+			"Genetic Algorithm Run" : "JPS Algorithm Run"
 
 		this.margin = {top: 20, right: 80, bottom: 30, left: 50};
 		this.width = this.props.containerWidth - this.margin.left - this.margin.right;
@@ -120,7 +122,7 @@ class Graph extends React.Component {
 
 		return (
 			<div>
-				<h4>Genetic Algorithm Run</h4>
+				<h4>{this.title}</h4>
 				<Row className="show-grid">
 					<Col sm={2}>
 						<h6>Generation {i} of {this.iMax - 1}</h6>

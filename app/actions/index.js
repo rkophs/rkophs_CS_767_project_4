@@ -1,67 +1,75 @@
-import { runGA } from './calculations'
+import { run } from './calculations'
 
-let nextGaRun = 0
+let nextRun = 0
 
-export const requestGAExecution = (bounds, constants, gaParams, id) => {
-  return {
-    type: "REQUEST_GA_EXECUTION",
-    id
-  }
+export const requestExecution = (id) => {
+	return {
+		type: "REQUEST_ML_EXECUTION",
+		id
+	}
 }
 
-export const receiveGAResults = (bounds, constants, gaParams, id, results, success) => {
-  if (success) {
-    return { type: "RECEIVE_GA_SUCCESS", bounds, constants, gaParams, id, results } 
-  } else {
-    return { type: "RECEIVE_GA_FAILURE", bounds, constants, gaParams, id } 
-  }
+export const receiveResults = (algType, bounds, constants, params, id, results, success) => {
+	if (success) {
+		return { type: "RECEIVE_ML_SUCCESS", algType, bounds, constants, params, id, results } 
+	} else {
+		return { type: "RECEIVE_ML_FAILURE", algType, bounds, constants, params, id } 
+	}
 }
 
-export const executeGA = (bounds, constants, gaParams) => {
-  return dispatch => {
-    const id = nextGaRun++;
-    dispatch(requestGAExecution(bounds, constants, gaParams, id))
-    runGA(bounds, constants, gaParams, () => false, (result, success) => {
-      dispatch(receiveGAResults(bounds, constants, gaParams, id, result, success))
-    });
-  }
+export const executeRun = (type, bounds, constants, params) => {
+	return dispatch => {
+		const id = nextRun++;
+		dispatch(requestExecution(id))
+		run(type)(bounds, constants, params, () => false, (result, success) => {
+			dispatch(receiveResults(type, bounds, constants, params, id, result, success))
+		});
+	}
 }
 
 export const updateBoundsConfig = (bound, key, value) => {
-  return {
-    type: "UPDATE_CONFIG_BOUNDS",
-    bound,
-    key,
-    value
-  }
+	return {
+		type: "UPDATE_CONFIG_BOUNDS",
+		bound,
+		key,
+		value
+	}
 }
 
 export const updateConstantsConfig = (constant, value) => {
-  return {
-    type: "UPDATE_CONFIG_CONSTANT",
-    constant,
-    value
-  }
+	return {
+		type: "UPDATE_CONFIG_CONSTANT",
+		constant,
+		value
+	}
 }
 
 export const updateGAParam = (param, value) => {
-  return {
-    type: "UPDATE_GA_PARAM",
-    param,
-    value
-  }
+	return {
+		type: "UPDATE_GA_PARAM",
+		param,
+		value
+	}
+}
+
+export const updateJPSParam = (param, value) => {
+	return {
+		type: "UPDATE_JPS_PARAM",
+		param,
+		value
+	}
 }
 
 export const changeRunDisplay = (id) => {
-  return {
-    type: "CHANGE_RUN_DISPLAY",
-    id
-  }
+	return {
+		type: "CHANGE_RUN_DISPLAY",
+		id
+	}
 }
 
 export const changeSpeed = (speed) => {
-  return {
-    type: "CHANGE_SPEED",
-    speed
-  }
+	return {
+		type: "CHANGE_SPEED",
+		speed
+	}
 }

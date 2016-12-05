@@ -2,25 +2,28 @@
 * @Author: ryan
 * @Date:   2016-11-28 12:41:13
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 14:15:28
+* @Last Modified time: 2016-12-05 17:13:56
 */
 
 'use strict';
 
 import React, { PropTypes } from 'react'
-import { Form, Button, Grid, Row, Col, Clearfix, Tabs, Tab, Accordion, Panel } from 'react-bootstrap'
+import { Form, Button, Grid, Row, Col, Clearfix, 
+	Tabs, Tab, Accordion, Panel, ButtonToolbar } from 'react-bootstrap'
 import Bounds from './Bounds'
 import Constant from './Constant'
 import AlgorithmConfig from './AlgorithmConfig'
 
 import '../../style/modules/config.scss'
 
-const FuelCellConfig = ({bounds, constants, gaParams,
-		onSubmitGA, onBoundsChange, onConstantsChange, onGaChange}) => (
+const FuelCellConfig = ({bounds, constants, gaParams, jpsParams,
+		onSubmitGA, onSubmitJPS, onBoundsChange, onConstantsChange, 
+		onGaChange, onJpsChange}) => (
 
 	<div>
 		<Accordion>
 			<Panel
+				className='settings'
 				header='Settings'
 				eventKey={1}
 			>
@@ -62,10 +65,21 @@ const FuelCellConfig = ({bounds, constants, gaParams,
 							title='GA Parameters'
 						>
 				 			<h4>Genetic Algorithm Parameters:</h4>
-				 			{gaParams.valueSeq().map(param =>
-				 				<AlgorithmConfig key={param.get("id")}
-				 						param={param}
+				 			{gaParams.valueSeq().map(gaParams =>
+				 				<AlgorithmConfig key={gaParams.get("id")}
+				 						param={gaParams}
 				 						onChange={onGaChange} />
+				 			)}
+						</Tab>
+						<Tab
+							eventKey={4}
+							title='JPS Parameters'
+						>
+				 			<h4>JPS Algorithm Parameters:</h4>
+				 			{jpsParams.valueSeq().map(jpsParams =>
+				 				<AlgorithmConfig key={jpsParams.get("id")}
+				 						param={jpsParams}
+				 						onChange={onJpsChange} />
 				 			)}
 						</Tab>
 					</Tabs>
@@ -73,7 +87,12 @@ const FuelCellConfig = ({bounds, constants, gaParams,
 				</Form>
 			</Panel>
 		</Accordion>
-		<Button bsStyle="primary" onClick={() => onSubmitGA(bounds, constants, gaParams)} >Run GA</Button>
+		<ButtonToolbar>
+			<Button bsStyle="primary" 
+					onClick={() => onSubmitGA(bounds, constants, gaParams)} >Run GA</Button>
+			<Button bsStyle="danger" 
+					onClick={() => onSubmitJPS(bounds, constants, jpsParams)} >Run JPS</Button>
+		</ButtonToolbar>
 	</div>
 )
 

@@ -2,30 +2,35 @@
 * @Author: ryan
 * @Date:   2016-11-28 11:36:28
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-11-29 17:46:13
+* @Last Modified time: 2016-12-05 16:09:26
 */
 
 'use strict';
 
 import { connect } from 'react-redux'
-import { executeGA,
+import { executeRun,
 			updateBoundsConfig,
 			updateConstantsConfig,
-			updateGAParam } from '../actions'
+			updateGAParam,
+			updateJPSParam } from '../actions'
 import FuelCellConfig from '../components/configuration/FuelCellConfig'
 
 const mapStateToProps = (state) => ({
 	bounds: state.configuration.get("bounds"),
 	constants: state.configuration.get("constants"),
-	gaParams: state.configuration.get("ga")
+	gaParams: state.configuration.get("ga"),
+	jpsParams: state.configuration.get("jps")
 })
 
 const mapDispatchToProps = (dispatch) => ({
 	onSubmitGA: (bounds, constants, gaParams) => dispatch(
-		executeGA(bounds, constants, gaParams)),
+		executeRun('GA', bounds, constants, gaParams)),
+	onSubmitJPS: (bounds, constants, jpsParams) => dispatch(
+		executeRun('JPS', bounds, constants, jpsParams)),
 	onBoundsChange: (bound, key, value) => dispatch(updateBoundsConfig(bound, key, value)),
 	onConstantsChange: (constant, value) => dispatch(updateConstantsConfig(constant, value)),
-	onGaChange: (param, value) => dispatch(updateGAParam(param, value))
+	onGaChange: (param, value) => dispatch(updateGAParam(param, value)),
+	onJpsChange: (param, value) => dispatch(updateJPSParam(param, value))
 })
 
 const Configuration = connect(
