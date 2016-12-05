@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 16:44:03
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-05 17:05:41
+* @Last Modified time: 2016-12-05 18:54:25
 */
 
 'use strict';
@@ -94,7 +94,9 @@ const normalize = (results, type) => {
 	const bests = []
 	const lines = generations.map(gen => {
 		const fittest = gen.get("fittest")
-		bests.push({ dna: fittest.dna().toArray(), fitness: fittest.fitness(), cost: fittest.cost() });
+		bests.push({ dna: fittest.dna().toArray(), 
+			fitness: fittest.fitness(), 
+			cost: fittest.cost() });
 
 		return fittest.solution().map((v, i) => {
 			yMin = Math.min(v, yMin);
@@ -105,6 +107,8 @@ const normalize = (results, type) => {
 		}).toArray()
 	}).toArray()
 
+	const approx = solution.solution().map((v, i) => [i, v]).toArray()
+
 	return Immutable.Map({
 		xBounds: [xMin, xMax],
 		yBounds: [yMin, yMax],
@@ -112,6 +116,7 @@ const normalize = (results, type) => {
 		bests: bests,
 		actualStack: actualStack,
 		solution: solution,
+		approx: approx,
 		type: type
 	})
 }

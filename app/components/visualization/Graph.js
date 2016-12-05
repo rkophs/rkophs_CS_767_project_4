@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-11-29 21:09:33
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-05 17:03:31
+* @Last Modified time: 2016-12-05 18:55:08
 */
 
 'use strict';
@@ -62,7 +62,7 @@ class Graph extends React.Component {
 		this.xBounds = this.props.run.get("xBounds")
 		this.yBounds = this.props.run.get("yBounds")
 		const actual = this.props.run.get("actualStack")
-		const approx = lines[lines.length - 1]
+		const approx = this.props.run.get("approx")
 		this.solution = this.props.run.get("solution")
 		this.title = this.props.run.get("type") == 'GA' ?
 			"Genetic Algorithm Run" : "JPS Algorithm Run"
@@ -128,7 +128,7 @@ class Graph extends React.Component {
 						<h6>Generation {i} of {this.iMax - 1}</h6>
 					</Col>
 					<Col sm={2}>
-						<h6>Best fitness: {(1/this.solution.fitness()).toFixed(7)}</h6>
+						<h6>Best Sum of Error Squared: {(this.solution.cost()).toFixed(7)}</h6>
 					</Col>
 					<Col sm={2}>
 						<h6>Time per animation frame, (ms):</h6>

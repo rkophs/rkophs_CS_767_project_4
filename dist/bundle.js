@@ -43210,7 +43210,7 @@
 	* @Author: ryan
 	* @Date:   2016-11-29 16:44:03
 	* @Last Modified by:   Ryan Kophs
-	* @Last Modified time: 2016-12-05 17:05:41
+	* @Last Modified time: 2016-12-05 18:54:25
 	*/
 
 	'use strict';
@@ -43263,7 +43263,9 @@
 		var bests = [];
 		var lines = generations.map(function (gen) {
 			var fittest = gen.get("fittest");
-			bests.push({ dna: fittest.dna().toArray(), fitness: fittest.fitness(), cost: fittest.cost() });
+			bests.push({ dna: fittest.dna().toArray(),
+				fitness: fittest.fitness(),
+				cost: fittest.cost() });
 
 			return fittest.solution().map(function (v, i) {
 				yMin = Math.min(v, yMin);
@@ -43274,6 +43276,10 @@
 			}).toArray();
 		}).toArray();
 
+		var approx = solution.solution().map(function (v, i) {
+			return [i, v];
+		}).toArray();
+
 		return _immutable2.default.Map({
 			xBounds: [xMin, xMax],
 			yBounds: [yMin, yMax],
@@ -43281,6 +43287,7 @@
 			bests: bests,
 			actualStack: actualStack,
 			solution: solution,
+			approx: approx,
 			type: type
 		});
 	};
@@ -50014,7 +50021,7 @@
 	* @Author: ryan
 	* @Date:   2016-11-29 21:09:33
 	* @Last Modified by:   Ryan Kophs
-	* @Last Modified time: 2016-12-05 17:03:31
+	* @Last Modified time: 2016-12-05 18:55:08
 	*/
 
 	'use strict';
@@ -50128,7 +50135,7 @@
 				this.xBounds = this.props.run.get("xBounds");
 				this.yBounds = this.props.run.get("yBounds");
 				var actual = this.props.run.get("actualStack");
-				var approx = lines[lines.length - 1];
+				var approx = this.props.run.get("approx");
 				this.solution = this.props.run.get("solution");
 				this.title = this.props.run.get("type") == 'GA' ? "Genetic Algorithm Run" : "JPS Algorithm Run";
 
@@ -50205,8 +50212,8 @@
 							_react2.default.createElement(
 								'h6',
 								null,
-								'Best fitness: ',
-								(1 / this.solution.fitness()).toFixed(7)
+								'Best Sum of Error Squared: ',
+								this.solution.cost().toFixed(7)
 							)
 						),
 						_react2.default.createElement(
