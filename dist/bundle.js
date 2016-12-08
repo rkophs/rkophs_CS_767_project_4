@@ -50021,7 +50021,7 @@
 	* @Author: ryan
 	* @Date:   2016-11-29 21:09:33
 	* @Last Modified by:   Ryan Kophs
-	* @Last Modified time: 2016-12-05 18:55:08
+	* @Last Modified time: 2016-12-08 17:59:22
 	*/
 
 	'use strict';
@@ -50050,11 +50050,11 @@
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
-	var _LinePlot = __webpack_require__(502);
+	var _LinePlot = __webpack_require__(501);
 
 	var _LinePlot2 = _interopRequireDefault(_LinePlot);
 
-	var _d = __webpack_require__(501);
+	var _d = __webpack_require__(502);
 
 	var d3 = _interopRequireWildcard(_d);
 
@@ -50143,6 +50143,7 @@
 				this.width = this.props.containerWidth - this.margin.left - this.margin.right;
 				this.height = 500 - this.margin.top - this.margin.bottom;
 				this.transform = 'translate(' + this.margin.left + ',' + this.margin.top + ')';
+				this.labels = [{ text: "Actual Stack", y: 25, className: "label_actual" }, { text: "Approximation", y: 50, className: "label_approx" }, { text: "Generation", y: 75, className: "label_generation" }];
 
 				var x = d3.scaleLinear().domain([this.xBounds[0], this.xBounds[1] * 1.1]).rangeRound([0, this.width]);
 
@@ -50184,12 +50185,16 @@
 				var i = this.state.i;
 
 				return _react2.default.createElement(
-					'div',
-					null,
+					_reactBootstrap.Grid,
+					{ fluid: true },
 					_react2.default.createElement(
-						'h4',
-						null,
-						this.title
+						_reactBootstrap.Row,
+						{ className: 'show-grid' },
+						_react2.default.createElement(
+							'h4',
+							null,
+							this.title
+						)
 					),
 					_react2.default.createElement(
 						_reactBootstrap.Row,
@@ -50208,7 +50213,7 @@
 						),
 						_react2.default.createElement(
 							_reactBootstrap.Col,
-							{ sm: 2 },
+							{ sm: 3 },
 							_react2.default.createElement(
 								'h6',
 								null,
@@ -50234,17 +50239,22 @@
 							})
 						)
 					),
-					_react2.default.createElement(_Plot2.default, {
-						lines: this.paths.slice(0, i),
-						actual: this.actual,
-						approx: this.approx,
-						yBounds: this.yBounds,
-						xBounds: this.xBounds,
-						margin: this.margin,
-						xAxis: this.xAxis,
-						yAxis: this.yAxis,
-						height: this.height
-					})
+					_react2.default.createElement(
+						_reactBootstrap.Row,
+						{ className: 'show-grid' },
+						_react2.default.createElement(_Plot2.default, {
+							lines: this.paths.slice(0, i),
+							actual: this.actual,
+							approx: this.approx,
+							yBounds: this.yBounds,
+							xBounds: this.xBounds,
+							margin: this.margin,
+							xAxis: this.xAxis,
+							yAxis: this.yAxis,
+							height: this.height,
+							labels: this.labels
+						})
+					)
 				);
 			}
 		}]);
@@ -50584,7 +50594,7 @@
 	* @Author: ryan
 	* @Date:   2016-11-29 21:46:42
 	* @Last Modified by:   Ryan Kophs
-	* @Last Modified time: 2016-12-01 15:06:58
+	* @Last Modified time: 2016-12-08 17:53:38
 	*/
 
 	'use strict';
@@ -50603,7 +50613,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _d = __webpack_require__(501);
+	var _d = __webpack_require__(502);
 
 	var d3 = _interopRequireWildcard(_d);
 
@@ -50617,8 +50627,49 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Axis = function (_React$Component) {
-		_inherits(Axis, _React$Component);
+	var Legend = function (_React$Component) {
+		_inherits(Legend, _React$Component);
+
+		function Legend(props) {
+			_classCallCheck(this, Legend);
+
+			return _possibleConstructorReturn(this, (Legend.__proto__ || Object.getPrototypeOf(Legend)).call(this, props));
+		}
+
+		_createClass(Legend, [{
+			key: 'render',
+			value: function render() {
+				var groups = this.props.labels.map(function (label, i) {
+					return _react2.default.createElement(
+						'g',
+						{ className: 'legend', key: 'legend_' + i,
+							transform: 'translate(36,' + label.y + ')'
+						},
+						_react2.default.createElement('rect', { width: '10',
+							height: '10',
+							className: label.className
+						}),
+						_react2.default.createElement(
+							'text',
+							{ x: '22', y: '14' },
+							label.text
+						)
+					);
+				});
+
+				return _react2.default.createElement(
+					'g',
+					{ transform: this.props.transform },
+					groups
+				);
+			}
+		}]);
+
+		return Legend;
+	}(_react2.default.Component);
+
+	var Axis = function (_React$Component2) {
+		_inherits(Axis, _React$Component2);
 
 		function Axis(props) {
 			_classCallCheck(this, Axis);
@@ -50681,7 +50732,8 @@
 		    margin = _ref.margin,
 		    xAxis = _ref.xAxis,
 		    yAxis = _ref.yAxis,
-		    height = _ref.height;
+		    height = _ref.height,
+		    labels = _ref.labels;
 
 
 		var transform = "translate(" + margin.left + "," + margin.top + ")";
@@ -50692,7 +50744,6 @@
 			_react2.default.createElement(
 				'svg',
 				{
-					id: "testId",
 					width: '100%',
 					height: '500'
 				},
@@ -50703,7 +50754,9 @@
 					_react2.default.createElement(Axis, { h: height, axis: xAxis, axisType: 'x', text: 'Current (A)' }),
 					lines,
 					actual,
-					approx
+					approx,
+					_react2.default.createElement(Legend, { labels: labels, h: height,
+						transform: 'translate(20, ' + (height - 125) + ')' })
 				)
 			)
 		);
@@ -50713,6 +50766,119 @@
 
 /***/ },
 /* 501 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	* @Author: ryan
+	* @Date:   2016-11-29 21:50:35
+	* @Last Modified by:   Ryan Kophs
+	* @Last Modified time: 2016-11-30 09:59:18
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _d = __webpack_require__(502);
+
+	var d3 = _interopRequireWildcard(_d);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var LinePlot = function LinePlot() {
+
+		var type = function type(d, _, columns) {
+			d.date = parseTime(d.date);
+			for (var i = 1, n = columns.length, c; i < n; ++i) {
+				d[c = columns[i]] = +d[c];
+			}return d;
+		};
+
+		var svg = d3.select("#chart_svg"),
+		    margin = { top: 20, right: 80, bottom: 30, left: 50 },
+		    width = 960 - margin.left - margin.right,
+		    height = 500 - margin.top - margin.bottom,
+		    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var x = d3.scaleLinear().range([0, width]),
+		    y = d3.scaleLinear().range([height, 0]),
+		    z = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var line = d3.line().curve(d3.curveBasis).x(function (d) {
+			return x(d.date);
+		}).y(function (d) {
+			return y(d.temperature);
+		});
+
+		var cities = [{
+			id: "New York",
+			values: [{
+				date: 20111001,
+				temperature: 63
+			}, {
+				date: 20111002,
+				temperature: 65
+			}, {
+				date: 20111003,
+				temperature: 66
+			}]
+		}, {
+			id: "Austin",
+			values: [{
+				date: 20111001,
+				temperature: 93
+			}, {
+				date: 20111002,
+				temperature: 95
+			}, {
+				date: 20111003,
+				temperature: 96
+			}]
+		}];
+
+		x.domain([20111001, 20111003]);
+
+		y.domain([d3.min(cities, function (c) {
+			return d3.min(c.values, function (d) {
+				return d.temperature;
+			});
+		}), d3.max(cities, function (c) {
+			return d3.max(c.values, function (d) {
+				return d.temperature;
+			});
+		})]);
+
+		z.domain(cities.map(function (c) {
+			return c.id;
+		}));
+
+		g.append("g").attr("class", "axis axis--x").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).append("text").attr("x", 50).attr("dx", "0.71em").attr("fill", "#000").text("Current (Amps)");
+
+		g.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y)).append("text").attr("transform", "rotate(-90)").attr("y", 10).attr("dy", "0.71em").attr("fill", "#000").text("Potential (V)");
+
+		var city = g.selectAll(".city").data(cities).enter().append("g").attr("class", "city");
+
+		city.append("path").attr("class", "line").attr("d", function (d) {
+			return line(d.values);
+		}).style("stroke", function (d) {
+			return z(d.id);
+		});
+
+		city.append("text").datum(function (d) {
+			return { id: d.id, value: d.values[d.values.length - 1] };
+		}).attr("transform", function (d) {
+			return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")";
+		}).attr("x", 3).attr("dy", "0.35em").style("font", "10px sans-serif").text(function (d) {
+			return d.id;
+		});
+	};
+
+	exports.default = LinePlot;
+
+/***/ },
+/* 502 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://d3js.org Version 4.4.0. Copyright 2016 Mike Bostock.
@@ -67111,119 +67277,6 @@
 
 
 /***/ },
-/* 502 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	* @Author: ryan
-	* @Date:   2016-11-29 21:50:35
-	* @Last Modified by:   Ryan Kophs
-	* @Last Modified time: 2016-11-30 09:59:18
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _d = __webpack_require__(501);
-
-	var d3 = _interopRequireWildcard(_d);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	var LinePlot = function LinePlot() {
-
-		var type = function type(d, _, columns) {
-			d.date = parseTime(d.date);
-			for (var i = 1, n = columns.length, c; i < n; ++i) {
-				d[c = columns[i]] = +d[c];
-			}return d;
-		};
-
-		var svg = d3.select("#chart_svg"),
-		    margin = { top: 20, right: 80, bottom: 30, left: 50 },
-		    width = 960 - margin.left - margin.right,
-		    height = 500 - margin.top - margin.bottom,
-		    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-		var x = d3.scaleLinear().range([0, width]),
-		    y = d3.scaleLinear().range([height, 0]),
-		    z = d3.scaleOrdinal(d3.schemeCategory10);
-
-		var line = d3.line().curve(d3.curveBasis).x(function (d) {
-			return x(d.date);
-		}).y(function (d) {
-			return y(d.temperature);
-		});
-
-		var cities = [{
-			id: "New York",
-			values: [{
-				date: 20111001,
-				temperature: 63
-			}, {
-				date: 20111002,
-				temperature: 65
-			}, {
-				date: 20111003,
-				temperature: 66
-			}]
-		}, {
-			id: "Austin",
-			values: [{
-				date: 20111001,
-				temperature: 93
-			}, {
-				date: 20111002,
-				temperature: 95
-			}, {
-				date: 20111003,
-				temperature: 96
-			}]
-		}];
-
-		x.domain([20111001, 20111003]);
-
-		y.domain([d3.min(cities, function (c) {
-			return d3.min(c.values, function (d) {
-				return d.temperature;
-			});
-		}), d3.max(cities, function (c) {
-			return d3.max(c.values, function (d) {
-				return d.temperature;
-			});
-		})]);
-
-		z.domain(cities.map(function (c) {
-			return c.id;
-		}));
-
-		g.append("g").attr("class", "axis axis--x").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).append("text").attr("x", 50).attr("dx", "0.71em").attr("fill", "#000").text("Current (Amps)");
-
-		g.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y)).append("text").attr("transform", "rotate(-90)").attr("y", 10).attr("dy", "0.71em").attr("fill", "#000").text("Potential (V)");
-
-		var city = g.selectAll(".city").data(cities).enter().append("g").attr("class", "city");
-
-		city.append("path").attr("class", "line").attr("d", function (d) {
-			return line(d.values);
-		}).style("stroke", function (d) {
-			return z(d.id);
-		});
-
-		city.append("text").datum(function (d) {
-			return { id: d.id, value: d.values[d.values.length - 1] };
-		}).attr("transform", function (d) {
-			return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")";
-		}).attr("x", 3).attr("dy", "0.35em").style("font", "10px sans-serif").text(function (d) {
-			return d.id;
-		});
-	};
-
-	exports.default = LinePlot;
-
-/***/ },
 /* 503 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -67554,7 +67607,7 @@
 
 
 	// module
-	exports.push([module.id, "/*\n* @Author: ryan\n* @Date:   2016-12-03 14:49:24\n* @Last Modified by:   Ryan Kophs\n* @Last Modified time: 2016-12-04 17:25:18\n*/\n.results-panel {\n  margin-top: 20px; }\n\n.results-list {\n  border-right: 1px solid #ddd;\n  margin-top: -15px;\n  margin-bottom: -15px;\n  padding: 0px; }\n\n.results-items {\n  width: 100%;\n  border-radius: 0px;\n  border: none;\n  box-shadow: none; }\n\n.results-label {\n  padding-left: 20px; }\n\n.results-graph {\n  border-bottom: 1px solid #ddd;\n  padding-bottom: 20px; }\n\n.results-data {\n  padding-top: 20px; }\n\n.row.is-flex {\n  display: flex;\n  flex-wrap: wrap; }\n\n.row.is-flex > [class*='col-'] {\n  display: flex;\n  flex-direction: column; }\n\n.row.is-flex {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.row.is-flex > [class*='col-'] {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n  -ms-flex-direction: column;\n  flex-direction: column; }\n\n.mouse-line {\n  stroke: black;\n  stroke-width: 1px;\n  opacity: 0; }\n\n.axis--x path {\n  display: none; }\n\n.line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1px; }\n\n.line_approx {\n  fill: none;\n  stroke: lightcoral;\n  stroke-width: 3px; }\n\n.line_actual {\n  fill: none;\n  stroke: springgreen;\n  stroke-width: 4px; }\n\n.text_results {\n  white-space: nowrap;\n  height: 700px;\n  overflow: scroll; }\n\n.run_configuration {\n  white-space: nowrap;\n  height: 700px;\n  overflow: scroll; }\n", ""]);
+	exports.push([module.id, "/*\n* @Author: ryan\n* @Date:   2016-12-03 14:49:24\n* @Last Modified by:   Ryan Kophs\n* @Last Modified time: 2016-12-08 17:53:07\n*/\n.results-panel {\n  margin-top: 20px; }\n\n.results-list {\n  border-right: 1px solid #ddd;\n  margin-top: -15px;\n  margin-bottom: -15px;\n  padding: 0px; }\n\n.results-items {\n  width: 100%;\n  border-radius: 0px;\n  border: none;\n  box-shadow: none; }\n\n.results-label {\n  padding-left: 20px; }\n\n.results-graph {\n  border-bottom: 1px solid #ddd;\n  padding-bottom: 20px; }\n\n.results-data {\n  padding-top: 20px; }\n\n.row.is-flex {\n  display: flex;\n  flex-wrap: wrap; }\n\n.row.is-flex > [class*='col-'] {\n  display: flex;\n  flex-direction: column; }\n\n.row.is-flex {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.row.is-flex > [class*='col-'] {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n  -ms-flex-direction: column;\n  flex-direction: column; }\n\n.mouse-line {\n  stroke: black;\n  stroke-width: 1px;\n  opacity: 0; }\n\n.axis--x path {\n  display: none; }\n\n.line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1px; }\n\n.label_approx {\n  fill: lightcoral;\n  stroke: lightcoral;\n  stroke-width: 3px; }\n\n.label_actual {\n  fill: springgreen;\n  stroke: springgreen;\n  stroke-width: 3px; }\n\n.label_generation {\n  fill: steelblue;\n  stroke: steelblue;\n  stroke-width: 3px; }\n\n.line_approx {\n  fill: none;\n  stroke: lightcoral;\n  stroke-width: 3px; }\n\n.line_actual {\n  fill: none;\n  stroke: springgreen;\n  stroke-width: 4px; }\n\n.legend {\n  font-size: 12px; }\n\n.text_results {\n  white-space: nowrap;\n  height: 700px;\n  overflow: scroll; }\n\n.run_configuration {\n  white-space: nowrap;\n  height: 700px;\n  overflow: scroll; }\n", ""]);
 
 	// exports
 

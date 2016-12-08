@@ -2,7 +2,7 @@
 * @Author: ryan
 * @Date:   2016-12-03 14:49:24
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-04 17:25:18
+* @Last Modified time: 2016-12-08 17:53:07
 */
 
 .results-panel {
@@ -84,6 +84,24 @@
 	stroke-width: 1px;
 }
 
+.label_approx {
+    fill: lightcoral;
+    stroke: lightcoral;
+    stroke-width: 3px;
+}
+
+.label_actual {
+    fill: springgreen;
+    stroke: springgreen;
+    stroke-width: 3px;
+}
+
+.label_generation {
+    fill: steelblue;
+    stroke: steelblue;
+    stroke-width: 3px;
+}
+
 .line_approx {
 	fill: none;
 	stroke: lightcoral;
@@ -94,6 +112,10 @@
 	fill: none;
 	stroke: springgreen;
 	stroke-width: 4px;
+}
+
+.legend {
+    font-size: 12px;
 }
 
 .text_results {

@@ -2,14 +2,14 @@
 * @Author: ryan
 * @Date:   2016-11-29 21:09:33
 * @Last Modified by:   Ryan Kophs
-* @Last Modified time: 2016-12-05 18:55:08
+* @Last Modified time: 2016-12-08 17:59:22
 */
 
 'use strict';
 
 import React, { PropTypes } from 'react'
 import Dimensions from 'react-dimensions'
-import {FormControl, Col, Row} from 'react-bootstrap';
+import {FormControl, Col, Row, Grid} from 'react-bootstrap';
 import Plot from './Plot'
 import Immutable from 'immutable'
 import LinePlot from '../../utilities/LinePlot'
@@ -71,6 +71,10 @@ class Graph extends React.Component {
 		this.width = this.props.containerWidth - this.margin.left - this.margin.right;
 		this.height = 500 - this.margin.top - this.margin.bottom;
 		this.transform = `translate(${this.margin.left},${this.margin.top})`
+		this.labels = [
+			{text:"Actual Stack", y:25, className:"label_actual"},
+			{text:"Approximation", y:50, className:"label_approx"},
+			{text:"Generation", y:75, className:"label_generation"}]
 
 		const x = d3.scaleLinear()
 			.domain([this.xBounds[0], this.xBounds[1]*1.1])
@@ -121,13 +125,15 @@ class Graph extends React.Component {
 		const i = this.state.i
 
 		return (
-			<div>
-				<h4>{this.title}</h4>
+			<Grid fluid={true} >
+				<Row className="show-grid">
+					<h4>{this.title}</h4>
+				</Row>
 				<Row className="show-grid">
 					<Col sm={2}>
 						<h6>Generation {i} of {this.iMax - 1}</h6>
 					</Col>
-					<Col sm={2}>
+					<Col sm={3}>
 						<h6>Best Sum of Error Squared: {(this.solution.cost()).toFixed(7)}</h6>
 					</Col>
 					<Col sm={2}>
@@ -140,18 +146,21 @@ class Graph extends React.Component {
 						/>
 					</Col>
 				</Row>
-				<Plot
-					lines={this.paths.slice(0, i)}
-					actual={this.actual}
-					approx={this.approx}
-					yBounds={this.yBounds}
-					xBounds={this.xBounds}
-					margin={this.margin}
-					xAxis={this.xAxis}
-					yAxis={this.yAxis}
-					height={this.height}
-				/>
-			</div>
+				<Row className="show-grid">
+					<Plot
+						lines={this.paths.slice(0, i)}
+						actual={this.actual}
+						approx={this.approx}
+						yBounds={this.yBounds}
+						xBounds={this.xBounds}
+						margin={this.margin}
+						xAxis={this.xAxis}
+						yAxis={this.yAxis}
+						height={this.height}
+						labels={this.labels}
+					/>
+				</Row>
+			</Grid>
 		)
 	}
 }
